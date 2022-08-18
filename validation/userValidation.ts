@@ -4,5 +4,11 @@ import { schema } from "../utils/schema";
 export const registerSchema = Joi.object({
     name : schema.name,
     email : schema.email,
-    age: schema.age
+    age : schema.age,
+})
+
+export const updateSchema = Joi.object({
+    name : schema.nameUpdate,
+    email : schema.emailUpdate,
+    age : schema.ageUpdate
 })

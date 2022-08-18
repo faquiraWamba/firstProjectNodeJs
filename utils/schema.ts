@@ -1,9 +1,12 @@
 import Joi from "joi";
 
 export const schema = {
-    name : Joi.string().alphanum().max(15).min(3).trim(true).optional(),
-    email: Joi.string().email().trim(true),
+    name : Joi.string().required(),
+    email: Joi.string().email().trim(true).required(),
     age : Joi.number().integer(),
+    nameUpdate : Joi.string().optional(),
+    emailUpdate: Joi.string().email().trim(true).optional(),
+    ageUpdate : Joi.number().integer().min(1).optional(),
     password : Joi.string()
     .required()
     .min(8)
