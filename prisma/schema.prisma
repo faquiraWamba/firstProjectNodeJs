@@ -13,18 +13,37 @@ datasource db {
 model User {
   id  Int @id @default(autoincrement())
   email String @unique
-  name String?
+  firstName String
+  lastName String
+  password String
+  sexe String
   age Int
+  role Int
+  updateAt DateTime @updatedAt
   posts Post[]
+  tokens Token[]
 }
 model Post {
   id Int @id @default(autoincrement())
   title String
-  content String
-  published Boolean @default(false)
+  price Int
+  publishedDate DateTime @default(now())
+  updateAt DateTime @updatedAt
+  author User @relation(fields : [authorId], references : [id])
+  authorId Int
+  images Image[]
+}
+model Image {
+  id Int @id @default(autoincrement())
+  hash String
+  post Post @relation(fields : [postId], references : [id])
+  postId Int
+}
+model Token {
+  id Int @id @default(autoincrement())
+  jwt String
+  expiredAt DateTime
   author User @relation(fields : [authorId], references : [id])
   authorId Int
 }
-
-
 

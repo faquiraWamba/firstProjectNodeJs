@@ -2,24 +2,48 @@ import express,{ Request, Response} from "express"
 import {body, validationResult} from "express-validator"
 import { PrismaClient} from "@prisma/client"
 import { userCtrl } from "../controller/userController";
+import { postCtrl } from "../controller/postController";
+import multer from "multer"
+import path from "path";
+import checkAuthorization  from "../middleware/auth";
+
+const storage = multer.diskStorage({
+    destination:(req:Request, file, cb) =>{
+        cb(null, "images")
+    },
+    filename: (req:Request, file, cb) =>{
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+})
 
 
-
+const upload = multer({storage : storage})
 const prisma = new PrismaClient();
 
 const apiRouter:express.Router = express.Router()
 
 
-
-apiRouter.get('/getUser', userCtrl.userList)
-
 apiRouter.post('/register', userCtrl.createUser)
+
+apiRouter.post('/login', userCtrl.connectUser)
+
+apiRouter.post('/createPost', upload.array('images',5), postCtrl.CreatePost)
+
+apiRouter.get('/listPost', checkAuthorization, postCtrl.listPost)
+
+apiRouter.get('/getPost/:id', postCtrl.getPost)
+
+apiRouter.put('/updatePost/:id', postCtrl.updatePost)
+
+apiRouter.delete('/deletePost/:id', postCtrl.deletePost)
+
+/*apiRouter.get('/getUser', userCtrl.userList)
 
 apiRouter.get('/find/:id', userCtrl.findUser)
 
 apiRouter.put('/update/:id', userCtrl.updateUser)
 
-apiRouter.delete('/delete/:id', userCtrl.deleteUser)
+apiRouter.delete('/delete/:id', userCtrl.deleteUser)*/
 
 
 /* 
