@@ -27,29 +27,31 @@ apiRouter.post('/register', userCtrl.createUser)
 
 apiRouter.post('/login', userCtrl.connectUser)
 
-apiRouter.post('/createPost', upload.array('images',5), postCtrl.CreatePost)
+apiRouter.get('/logout', checkAuthorization, userCtrl.logOut)
+
+apiRouter.post('/createPost' ,  upload.array('images',5), postCtrl.CreatePost)
 
 apiRouter.get('/listPost', checkAuthorization, postCtrl.listPost)
 
-apiRouter.get('/getPost/:id', postCtrl.getPost)
+apiRouter.get('/getPost/:id', checkAuthorization, postCtrl.getPost)
 
-apiRouter.put('/updatePost/:id', postCtrl.updatePost)
+apiRouter.put('/updatePost/:id' , checkAuthorization, postCtrl.updatePost)
 
-apiRouter.delete('/deletePost/:id', postCtrl.deletePost)
+apiRouter.delete('/deletePost/:id' , checkAuthorization, postCtrl.deletePost)
 
-/*apiRouter.get('/getUser', userCtrl.userList)
+apiRouter.get('/getUser' , checkAuthorization, userCtrl.userList)
 
-apiRouter.get('/find/:id', userCtrl.findUser)
+apiRouter.get('/find/:id' , checkAuthorization, userCtrl.findUser)
 
-apiRouter.put('/update/:id', userCtrl.updateUser)
+apiRouter.put('/update/:id', checkAuthorization, userCtrl.updateUser)
 
-apiRouter.delete('/delete/:id', userCtrl.deleteUser)*/
+apiRouter.delete('/delete/:id', checkAuthorization, userCtrl.deleteUser)
 
 
 /* 
     fields : name, email, password
 */
-apiRouter.post('/login',[
+/*apiRouter.post('/login',[
     body('name').not().isEmpty().withMessage('name is required'),
     body('email').isEmail().withMessage('email is required'),
     body('password').isLength({min:5}).withMessage('minimum 5')
@@ -68,7 +70,7 @@ apiRouter.post('/login',[
         }catch(error){
             console.error
         }}
-    )
+    )*/
     
 
 

@@ -3,8 +3,8 @@ import { join } from "path";
 
 export const schema = {
     firstName : Joi.string().required(),
-    lastName : Joi.string().required(),
-    sexe : Joi.string().required(),
+    lastName : Joi.string(),
+    sexe : Joi.string(),
     email: Joi.string().email().trim(true).required(),
     age : Joi.number().integer(),
     updateAt : Joi.date().required(),

@@ -44,7 +44,7 @@ class PostController{
 
                         res.status(200).json({
                             msg : 'Post create',
-                            user : postCreate
+                            post : postCreate
                         })
 
                     }
@@ -167,16 +167,16 @@ public async deletePost(req:Request, res:Response) {
     try{
         let id = parseInt(req.params.id)
    
-        const postfound = await Post.findUnique({
+        const postfound = await Post.findFirst({
             where :{id}
         })
         
         if(!postfound){
             res.status(400).json({msg:'post not found'})
         }else{
-            /*const imageDelete = await Image.delete({
+            const imageDelete = await Image.deleteMany ({
                 where:{postId : postfound.id}
-            })*/
+            })
             const postDelete = await Post.delete({
                 where :{id : postfound.id}
             })
